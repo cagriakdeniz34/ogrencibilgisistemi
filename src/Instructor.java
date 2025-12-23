@@ -1,6 +1,6 @@
 public class Instructor {
     private String name;
-    private String department; // Bölümü (Örn: Bilgisayar Müh.)
+    private String department;
 
     public Instructor(String name, String department) {
         this.name = name;
@@ -11,7 +11,7 @@ public class Instructor {
         return name;
     }
 
-    // Hoca bilgisini ekrana yazdırmak için:
+
     @Override
     public String toString() {
         return  name + " [" + department + "]";

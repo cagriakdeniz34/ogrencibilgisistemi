@@ -3,7 +3,7 @@ public class Course {
     private String code;
     private String name;
     private int credit;
-    private Instructor instructor; // Dersin bir hocası nesnesi olacak
+    private Instructor instructor;
 
     public Course(String code, String name, int credit) {
         this.code = code;
