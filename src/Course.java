@@ -3,7 +3,7 @@ public class Course {
     private String code;
     private String name;
     private int credit;
-
+    private Instructor instructor; // Dersin bir hocası nesnesi olacak
 
     public Course(String code, String name, int credit) {
         this.code = code;
@@ -23,6 +23,15 @@ public class Course {
 
     @Override
     public String toString() {
-        return code + " - " + name + " (" + credit + " Kredi)";
+        if (instructor != null) {
+            return code + " - " + name + " (" + credit + " Kredi) - Veren: " + instructor.getName();
+        }
+        else {
+            return code + " - " + name + " (" + credit + " Kredi) - Hoca atanmadı";
+        }
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
     }
 }
