@@ -16,6 +16,7 @@ public class Main {
 
         System.out.println(ders2.toString());
 
+
         System.out.println("--------------------------------");
 
         Student ogr1 = new Student(240309013, "Cagri Akdeniz");
@@ -24,5 +25,18 @@ public class Main {
         GraduateStudent ogr2 = new GraduateStudent(240309017, "Ertugrul Veli Akin", "Siber Guvenlik");
         System.out.println("Yuksek Lisans: " + ogr2.toString() + " Harc Bedeli: " + ogr2.calculateTuition() + " TL");
         System.out.println("Tez Konusu: " + ogr2.getThesis());
+
+
+        System.out.println("\n--- DERS KAYIT TESTI ---");
+
+        ogr1.registerCourse(ders1);
+        ogr1.registerCourse(ders2);
+        ogr2.registerCourse(ders2);
+
+        System.out.println("\n--- DERS LISTELEME TESTI ---");
+
+        ogr1.listCourses();
+
+        ogr2.listCourses();
     }
 }
