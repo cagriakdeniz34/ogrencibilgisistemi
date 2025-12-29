@@ -17,16 +17,18 @@ public class Main {
         scanner.nextLine();
 
         Student ogrenci = new Student(id, adSoyad);
-        System.out.println("\nHoş geldin " + ogrenci.getName() + ". İşlem seçiniz:");
+        System.out.println("\nHoş geldin " + ogrenci.getName() + ". Giriş yapıldı.");
 
 
         boolean devamEtsinMi = true;
 
         while (devamEtsinMi) {
-            System.out.println("\n--- MENÜ ---");
+            System.out.println("\n-----------------------");
+            System.out.println("       ANA MENÜ");
+            System.out.println("-----------------------");
             System.out.println("1 - Yeni Ders Ekle");
-            System.out.println("2 - Dersleri Listele");
-            System.out.println("0 - Çıkış Yap");
+            System.out.println("2 - Aldığım Dersleri Listele");
+            System.out.println("0 - Sistemden Çıkış Yap");
             System.out.print("Seçiminiz: ");
 
             int secim = scanner.nextInt();
@@ -34,7 +36,7 @@ public class Main {
 
             if (secim == 1) {
 
-                System.out.print("Ders Kodu (Örn: CS101): ");
+                System.out.print("Ders Kodu1: ");
                 String kod = scanner.nextLine();
 
                 System.out.print("Ders Adı: ");
@@ -48,16 +50,14 @@ public class Main {
                 ogrenci.registerCourse(yeniDers);
 
             } else if (secim == 2) {
-
                 ogrenci.listCourses();
 
             } else if (secim == 0) {
-
-                System.out.println("Sistemden çıkılıyor... İyi günler!");
+                System.out.println("Sistem kapatılıyor. İyi çalışmalar!");
                 devamEtsinMi = false;
 
             } else {
-                System.out.println("Hatalı seçim! Lütfen tekrar deneyin.");
+                System.out.println("Hatalı bir seçim yaptınız! Lütfen tekrar deneyin.");
             }
         }
 
