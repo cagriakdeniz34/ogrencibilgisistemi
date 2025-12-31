@@ -38,4 +38,6 @@ public class Course {
     public double calculateTuition() {
         return 10000.0;
     }
+
+
 }

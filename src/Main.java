@@ -13,12 +13,13 @@ public class Main {
         int id = 0;
 
 
+
         while (true) {
             try {
                 System.out.print("Öğrencinin Adı Soyadı: ");
                 adSoyad = scanner.nextLine();
 
-                System.out.print("Öğrenci ID (Sadece Sayı): ");
+                System.out.print("Öğrenci ID: ");
                 id = scanner.nextInt();
                 scanner.nextLine();
 
@@ -34,13 +35,13 @@ public class Main {
 
         boolean devamEtsinMi = true;
 
-
         while (devamEtsinMi) {
             System.out.println("\n-----------------------");
             System.out.println("       ANA MENÜ");
             System.out.println("-----------------------");
             System.out.println("1 - Yeni Ders Ekle");
             System.out.println("2 - Aldığım Dersleri Listele");
+            System.out.println("3 - Ders Sil");
             System.out.println("0 - Sistemden Çıkış Yap");
             System.out.print("Seçiminiz: ");
 
@@ -57,7 +58,7 @@ public class Main {
 
             if (secim == 1) {
 
-                System.out.print("Ders Kodu (Örn: CS101): ");
+                System.out.print("Ders Kodu: ");
                 String kod = scanner.nextLine();
 
                 System.out.print("Ders Adı: ");
@@ -82,6 +83,19 @@ public class Main {
             } else if (secim == 2) {
 
                 ogrenci.listCourses();
+
+            } else if (secim == 3) {
+
+                System.out.print("Silinecek Dersin Kodu: ");
+                String silinecekKod = scanner.nextLine();
+
+                boolean sonuc = ogrenci.dropCourse(silinecekKod);
+
+                if (sonuc) {
+                    System.out.println( silinecekKod + " kodlu ders başarıyla silindi.");
+                } else {
+                    System.out.println("HATA: Listenizde " + silinecekKod + " kodlu bir ders bulunamadı.");
+                }
 
             } else if (secim == 0) {
 

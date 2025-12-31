@@ -16,22 +16,33 @@ public class Student implements Registrable {
         return name;
     }
 
-
     public double calculateTuition() {
         return 4000.0;
     }
 
     @Override
     public void registerCourse(Course course) {
-
         if (this.courses.contains(course)) {
             System.out.println("HATA: " + this.name + " zaten " + course.getName() + " dersine kayıtlı!");
-        }
-        else {
+        } else {
             this.courses.add(course);
             System.out.println(this.name + " isimli öğrenci " + course.getName() + " dersine başarıyla kayıt oldu.");
         }
     }
+
+    // --- YENİ EKLENEN METOD (DERS SİLME) ---
+    public boolean dropCourse(String courseCode) {
+        // Listedeki dersleri tek tek kontrol ediyoruz
+        for (Course course : this.courses) {
+            // Eğer aranan kod (büyük/küçük harf farketmeksizin) eşleşirse
+            if (course.getCode().equalsIgnoreCase(courseCode)) {
+                this.courses.remove(course); // Dersi listeden sil
+                return true; // İşlem başarılı
+            }
+        }
+        return false; // Ders bulunamadı
+    }
+    // ---------------------------------------
 
     @Override
     public String getRegistrationInfo() {
@@ -50,13 +61,14 @@ public class Student implements Registrable {
             System.out.println("-------------------------------------");
             System.out.println(this.getName() + " isimli ogrencinin aldigi dersler:");
             for (Course course : this.courses) {
-                System.out.println(" - " + course.getName());
+                // Listeleme yaparken kodunu da gösterelim ki silerken kolaylık olsun
+                System.out.println(" - [" + course.getCode() + "] " + course.getName());
             }
             System.out.println("-------------------------------------");
         }
     }
 
-    public java.util.List<Course> getCourses(){
+    public java.util.List<Course> getCourses() {
         return courses;
     }
 }
