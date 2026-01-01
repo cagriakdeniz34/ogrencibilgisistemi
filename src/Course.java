@@ -1,9 +1,9 @@
 public class Course {
-
     private String code;
     private String name;
     private int credit;
     private Instructor instructor;
+
 
     public Course(String code, String name, int credit) {
         this.code = code;
@@ -12,32 +12,28 @@ public class Course {
     }
 
 
-    public String getCode() {
-        return code;
+    public void setInstructor(Instructor instructor) {
+
+        this.instructor = instructor;
     }
 
+
     public String getName() {
+
         return name;
+    }
+
+
+    public String getCode() {
+        return code;
     }
 
 
     @Override
     public String toString() {
-        if (instructor != null) {
-            return code + " - " + name + " (" + credit + " Kredi) - Veren: " + instructor.getName();
-        }
-        else {
-            return code + " - " + name + " (" + credit + " Kredi) - Hoca atanmadı";
-        }
+
+        String hocaBilgisi = (instructor != null) ? " - Hoca: " + instructor.getName() : " - Hoca: Atanmadı";
+
+        return "[" + code + "] " + name + " (" + credit + " Kredi)" + hocaBilgisi;
     }
-
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
-    }
-
-    public double calculateTuition() {
-        return 10000.0;
-    }
-
-
 }
