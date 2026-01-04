@@ -23,13 +23,24 @@ public class Student implements Registrable {
 
     public void registerCourse(Course course) {
 
+        int toplamKredi = 0;
         for (Course c : this.courses) {
+            toplamKredi += c.getCredit();
+        }
 
+        if (toplamKredi + course.getCredit() > 30) {
+            System.out.println("UYARI: Kredi limiti aşıldı! " + course.getCode() + " dersi eklenmedi.");
+            return;
+        }
+
+
+        for (Course c : this.courses) {
             if (c.getCode().equalsIgnoreCase(course.getCode())) {
                 System.out.println("UYARI: " + course.getCode() + " kodlu ders zaten listenizde var! Tekrar eklenmedi.");
                 return;
             }
         }
+
 
         this.courses.add(course);
         System.out.println(course.getCode() + " dersi başarıyla eklendi.");
