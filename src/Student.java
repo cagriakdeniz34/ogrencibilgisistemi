@@ -9,7 +9,7 @@ import java.util.List;
  * </p>
  *
  * @author Cagri
- * @version 1.1
+ * @version 1.2
  */
 public class Student implements Registrable {
 
@@ -40,14 +40,12 @@ public class Student implements Registrable {
      * @throws IllegalArgumentException Eğer ID negatifse veya sınırları aşıyorsa fırlatılır.
      */
     public Student(int id, String name) {
-
         if (id < 0) {
-            throw new IllegalArgumentException("Hata: Öğrenci ID negatif olamaz! ");
+            throw new IllegalArgumentException("Hata: Öğrenci ID negatif olamaz! Girilen: " + id);
         }
         if (id > MAX_VALID_ID) {
-            throw new IllegalArgumentException("Hata: Öğrenci ID belirlenen sınırı (" + MAX_VALID_ID + ") aşıyor!" );
+            throw new IllegalArgumentException("Hata: Öğrenci ID belirlenen sınırı (" + MAX_VALID_ID + ") aşıyor! Girilen: " + id);
         }
-
 
         this.id = id;
         this.name = name;
@@ -86,7 +84,8 @@ public class Student implements Registrable {
     public void registerCourse(Course course) {
         int toplamKredi = 0;
         for (Course c : this.courses) {
-            toplamKredi += c.getCredit(); // Not: Course sınıfında getCredits() veya getCredit() hangisi varsa onu kullan.
+
+            toplamKredi += c.getCredit();
         }
 
         if (toplamKredi + course.getCredit() > MAX_CREDIT_LIMIT) {
