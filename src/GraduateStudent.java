@@ -27,7 +27,7 @@ public class GraduateStudent extends Student {
      * @param thesisTopic Öğrencinin tez konusu (Örn: "Yapay Zeka").
      */
     public GraduateStudent(int id, String name, String thesisTopic) {
-        // super() anahtar kelimesi, Student sınıfının constructor'ını çalıştırır.
+
         super(id, name);
         this.thesisTopic = thesisTopic;
     }
@@ -72,7 +72,6 @@ public class GraduateStudent extends Student {
      */
     @Override
     public String toString() {
-        // super.toString() -> "Ali Veli (101)" kısmını getirir.
         return super.toString() + " [Yüksek Lisans - Tez: " + thesisTopic + "]";
     }
 }

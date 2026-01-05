@@ -173,7 +173,7 @@ public class Main {
                 }
 
             } else if (secim == 5) {
-                // Dosyaya Yazma
+
                 String dosyaYolu = "courses.csv";
 
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(dosyaYolu))) {

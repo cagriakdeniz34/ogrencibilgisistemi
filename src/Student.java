@@ -9,7 +9,7 @@ import java.util.List;
  * </p>
  *
  * @author Cagri
- * @version 1.0
+ * @version 1.1
  */
 public class Student implements Registrable {
 
@@ -22,19 +22,43 @@ public class Student implements Registrable {
     /** Öğrencinin kayıt olduğu derslerin tutulduğu liste */
     private List<Course> courses;
 
+    /** Maksimum alınabilecek kredi limiti */
+    private static final int MAX_CREDIT_LIMIT = 30;
+
+    /** Kabul edilen maksimum ID değeri (Veritabanı veya mantıksal sınır) */
+    private static final int MAX_VALID_ID = 999999999;
+
     /**
      * Yeni bir öğrenci nesnesi oluşturur.
      * Ders listesi otomatik olarak boş bir liste olarak başlatılır.
+     * <p>
+     * <b>Validasyon:</b> ID değeri negatif olamaz ve belirlenen üst sınırı aşamaz.
+     * </p>
      *
      * @param id   Öğrenci numarası (Sadece sayı).
      * @param name Öğrencinin adı ve soyadı.
+     * @throws IllegalArgumentException Eğer ID negatifse veya sınırları aşıyorsa fırlatılır.
      */
     public Student(int id, String name) {
+
+        if (id < 0) {
+            throw new IllegalArgumentException("Hata: Öğrenci ID negatif olamaz! ");
+        }
+        if (id > MAX_VALID_ID) {
+            throw new IllegalArgumentException("Hata: Öğrenci ID belirlenen sınırı (" + MAX_VALID_ID + ") aşıyor!" );
+        }
+
+
         this.id = id;
         this.name = name;
         this.courses = new ArrayList<>();
     }
 
+    /**
+     * Öğrencinin adını döndürür.
+     *
+     * @return Öğrenci tam adı.
+     */
     public String getName() {
         return name;
     }
@@ -53,25 +77,23 @@ public class Student implements Registrable {
      * Öğrencinin listesine yeni bir ders ekler.
      * <p>
      * Bu metot ekleme yapmadan önce iki kritik kontrol gerçekleştirir:
-     * 1. <b>Kredi Limiti Kontrolü:</b> Toplam kredi 20'yi aşarsa ekleme yapılmaz.
+     * 1. <b>Kredi Limiti Kontrolü:</b> Toplam kredi {@value #MAX_CREDIT_LIMIT}'u aşarsa ekleme yapılmaz.
      * 2. <b>Çift Kayıt Kontrolü:</b> Aynı ders (koduna göre) daha önce eklenmişse tekrar eklenmez.
      * </p>
      *
      * @param course Eklenecek olan {@link Course} nesnesi.
      */
     public void registerCourse(Course course) {
-        // 1. KREDİ LİMİTİ KONTROLÜ
         int toplamKredi = 0;
         for (Course c : this.courses) {
-            toplamKredi += c.getCredit();
+            toplamKredi += c.getCredit(); // Not: Course sınıfında getCredits() veya getCredit() hangisi varsa onu kullan.
         }
 
-        if (toplamKredi + course.getCredit() > 30) {
-            System.out.println("UYARI: Kredi limiti aşıldı! " + course.getCode() + " dersi eklenmedi.");
+        if (toplamKredi + course.getCredit() > MAX_CREDIT_LIMIT) {
+            System.out.println("UYARI: Kredi limiti (" + MAX_CREDIT_LIMIT + ") aşıldı! " + course.getCode() + " dersi eklenmedi.");
             return;
         }
 
-        // 2. ÇİFT DERS KONTROLÜ
         for (Course c : this.courses) {
             if (c.getCode().equalsIgnoreCase(course.getCode())) {
                 System.out.println("UYARI: " + course.getCode() + " kodlu ders zaten listenizde var! Tekrar eklenmedi.");
@@ -79,7 +101,6 @@ public class Student implements Registrable {
             }
         }
 
-        // 3. BAŞARILI EKLEME
         this.courses.add(course);
         System.out.println(course.getCode() + " dersi başarıyla eklendi.");
     }
@@ -91,7 +112,6 @@ public class Student implements Registrable {
      * @return Silme işlemi başarılıysa {@code true}, ders bulunamazsa {@code false} döner.
      */
     public boolean dropCourse(String courseCode) {
-        // removeIf metodu, koşulu sağlayan elemanı siler ve true döner
         boolean removed = this.courses.removeIf(c -> c.getCode().equalsIgnoreCase(courseCode));
 
         if (removed) {
@@ -100,11 +120,21 @@ public class Student implements Registrable {
         return removed;
     }
 
+    /**
+     * Arayüzden (Interface) gelen kayıt bilgi metodu.
+     *
+     * @return Öğrenci adı ve ID içeren bilgi metni.
+     */
     @Override
     public String getRegistrationInfo() {
         return "Ogrenci Kayit Bilgisi: " + name + " (ID: " + id + ")";
     }
 
+    /**
+     * Nesnenin String temsili.
+     *
+     * @return "Ad (ID)" formatında string.
+     */
     @Override
     public String toString() {
         return name + " (" + id + ")";
@@ -121,13 +151,18 @@ public class Student implements Registrable {
             System.out.println("-------------------------------------");
             System.out.println(this.getName() + " isimli ogrencinin aldigi dersler:");
             for (Course course : this.courses) {
-                // Dersin toString metodunu kullanır
                 System.out.println(" - " + course);
             }
             System.out.println("-------------------------------------");
         }
     }
 
+    /**
+     * Öğrencinin aldığı dersler listesini döndürür.
+     * Test sınıflarında doğrulama (assertion) yapmak için kullanılır.
+     *
+     * @return Ders listesi.
+     */
     public List<Course> getCourses() {
         return courses;
     }
